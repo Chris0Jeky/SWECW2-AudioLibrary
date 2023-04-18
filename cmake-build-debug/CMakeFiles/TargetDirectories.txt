@@ -1,3 +1,0 @@
-/cygdrive/c/Users/jekyt/Desktop/SWECW1/softweng-coursework-2/cmake-build-debug/CMakeFiles/softweng_coursework_2.dir
-/cygdrive/c/Users/jekyt/Desktop/SWECW1/softweng-coursework-2/cmake-build-debug/CMakeFiles/edit_cache.dir
-/cygdrive/c/Users/jekyt/Desktop/SWECW1/softweng-coursework-2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
