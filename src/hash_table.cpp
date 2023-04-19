@@ -25,3 +25,14 @@ unsigned int HashTable::hashFunction(const std::string& key) {
     }
     return hash % size;
 }
+
+void HashTable::printHashTable() {
+    for (int i = 0; i < size; i++) {
+        std::cout << "Bucket " << i << ": ";
+        for (const Track& track : buckets[i]) {
+            std::cout << "[" << track.title << ", " << track.artist << ", " << track.duration << "] -> ";
+        }
+        std::cout << "nullptr" << std::endl;
+    }
+}
+
