@@ -13,6 +13,8 @@ public:
 
     void insertTrack(const Track& track, bool useTitleAsKey);
 
+    void printHashTable();
+
 private:
     unsigned int hashFunction(const std::string& key);
 };
