@@ -14,7 +14,7 @@ int main() {
     std::string titleToSearch = "Some Track Title";
     Track* track = titleHashTable.searchTrack(titleToSearch, true);
     if (track) {
-        std::cout << "Found track: " << track->getTitle() << " by " << track->getArtist() << std::endl;
+        std::cout << "Found track: " << track->title << " by " << track->artist << std::endl;
     } else {
         std::cout << "Track not found" << std::endl;
     }
@@ -31,7 +31,7 @@ int main() {
     Track newTrack("New Track Title", "New Track Artist", 180);
     titleHashTable.insertTrack(newTrack, true);
     artistHashTable.insertTrack(newTrack, false);
-    std::cout << "Added new track: " << newTrack.getTitle() << " by " << newTrack.getArtist() << std::endl;
+    std::cout << "Added new track: " << newTrack.title << " by " << newTrack.artist << std::endl;
 
     return 0;
 }
