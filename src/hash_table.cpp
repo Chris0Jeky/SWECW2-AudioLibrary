@@ -1,29 +1,27 @@
-// hash_table.cpp
 #include "hash_table.h"
+#include <string>
 
 HashTable::HashTable(int size) : size(size) {
     buckets.resize(size);
 }
 
 void HashTable::insertTrack(const Track& track, bool useTitleAsKey) {
-    unsigned int index = useTitleAsKey ? hashFunction(track.title) : hashFunction(track.artist);
-    index %= size;
+    std::string key = useTitleAsKey ? track.title : track.artist;
+    unsigned int index = hashFunction(key);
 
-    for (const Track& existingTrack : buckets[index]) {
-        if ((useTitleAsKey && existingTrack.title == track.title) ||
-            (!useTitleAsKey && existingTrack.artist == track.artist && existingTrack.title == track.title)) {
-            return; // track already exists in the library
+    for (const Track& t : buckets[index]) {
+        if (t.title == track.title && t.artist == track.artist) {
+            return; // Track already exists, do not insert.
         }
     }
+
     buckets[index].push_back(track);
 }
 
 unsigned int HashTable::hashFunction(const std::string& key) {
-    unsigned int hashFunction(const std::string& key) {
-        unsigned int hash = 0;
-        for (char c : key) {
-            hash = 31 * hash + c;
-        }
-        return hash;
+    unsigned int hash = 0;
+    for (char c : key) {
+        hash = hash * 31 + c;
     }
+    return hash % size;
 }
