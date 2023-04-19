@@ -10,8 +10,6 @@ int main() {
 
     loadTracksFromFile("tracks.txt", titleHashTable, artistHashTable);
 
-    // Add, search, and remove operations go here
-
     // Example: Search for a track by title
     std::string titleToSearch = "Some Track Title";
     Track* track = titleHashTable.searchTrack(titleToSearch, true);

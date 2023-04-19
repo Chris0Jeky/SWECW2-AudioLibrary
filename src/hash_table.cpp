@@ -3,22 +3,11 @@
 #include <iostream>
 #include <ostream>
 
-HashTable::HashTable() {
-    for (unsigned int i = 0; i < TABLE_SIZE; ++i) {
-        table[i] = nullptr;
-    }
+HashTable::HashTable() : size(TABLE_SIZE) {
+    buckets.resize(TABLE_SIZE);
 }
 
-HashTable::~HashTable() {
-    for (unsigned int i = 0; i < TABLE_SIZE; ++i) {
-        HashNode* current = table[i];
-        while (current != nullptr) {
-            HashNode* nextNode = current->next;
-            delete current;
-            current = nextNode;
-        }
-    }
-}
+HashTable::~HashTable() {}
 
 HashTable::HashTable(int size) : size(size) {
     buckets.resize(size);
@@ -37,15 +26,32 @@ void HashTable::insertTrack(const Track& track, bool useTitleAsKey) {
     buckets[index].push_back(track);
 }
 
-unsigned int HashTable::hashFunction(const std::string& key) {
-    unsigned int hash = 0;
-    for (char c : key) {
-        hash = hash * 31 + c;
+Track* HashTable::searchTrack(const std::string& key, bool useTitleAsKey) {
+    unsigned int index = hashFunction(key);
+
+    for (Track& track : buckets[index]) {
+        if ((useTitleAsKey && track.title == key) || (!useTitleAsKey && track.artist == key)) {
+            return &track;
+        }
     }
-    return hash % size;
+
+    return nullptr;
 }
 
-void HashTable::printHashTable() {
+bool HashTable::removeTrack(const std::string& key, bool useTitleAsKey) {
+    unsigned int index = hashFunction(key);
+
+    for (auto it = buckets[index].begin(); it != buckets[index].end(); ++it) {
+        if ((useTitleAsKey && it->title == key) || (!useTitleAsKey && it->artist == key)) {
+            buckets[index].erase(it);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void HashTable::printHashTable() const {
     for (int i = 0; i < size; i++) {
         std::cout << "Bucket " << i << ": ";
         for (const Track& track : buckets[i]) {
@@ -55,20 +61,10 @@ void HashTable::printHashTable() {
     }
 }
 
-void HashTable::insertTrack(const Track& track, bool useTitleAsKey) {
-    // ...
+unsigned int HashTable::hashFunction(const std::string& key) const {
+    unsigned int hash = 0;
+    for (char c : key) {
+        hash = hash * 31 + c;
+    }
+    return hash % size;
 }
-
-Track* HashTable::searchTrack(const std::string& key, bool useTitleAsKey) {
-    // ...
-}
-
-bool HashTable::removeTrack(const std::string& key, bool useTitleAsKey) {
-    // ...
-}
-
-void HashTable::printHashTable() const {
-    // ...
-}
-
-
