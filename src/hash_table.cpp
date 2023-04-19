@@ -3,6 +3,23 @@
 #include <iostream>
 #include <ostream>
 
+HashTable::HashTable() {
+    for (unsigned int i = 0; i < TABLE_SIZE; ++i) {
+        table[i] = nullptr;
+    }
+}
+
+HashTable::~HashTable() {
+    for (unsigned int i = 0; i < TABLE_SIZE; ++i) {
+        HashNode* current = table[i];
+        while (current != nullptr) {
+            HashNode* nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
+    }
+}
+
 HashTable::HashTable(int size) : size(size) {
     buckets.resize(size);
 }
@@ -36,6 +53,22 @@ void HashTable::printHashTable() {
         }
         std::cout << "nullptr" << std::endl;
     }
+}
+
+void HashTable::insertTrack(const Track& track, bool useTitleAsKey) {
+    // ...
+}
+
+Track* HashTable::searchTrack(const std::string& key, bool useTitleAsKey) {
+    // ...
+}
+
+bool HashTable::removeTrack(const std::string& key, bool useTitleAsKey) {
+    // ...
+}
+
+void HashTable::printHashTable() const {
+    // ...
 }
 
 
