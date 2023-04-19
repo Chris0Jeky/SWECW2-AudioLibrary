@@ -1,24 +1,39 @@
 #include "file_loader.h"
 #include "hash_table.h"
+#include "track.h"
 #include <iostream>
 #include <ostream>
 
 int main() {
-    std::string fileName = "tracks.txt";
-    int tableSize = 1000000; // Choose an appropriate size for the hash tables
+    HashTable titleHashTable;
+    HashTable artistHashTable;
 
-    HashTable titleHashTable(tableSize);
-    HashTable artistHashTable(tableSize);
+    loadTracksFromFile("tracks.txt", titleHashTable, artistHashTable);
 
-    loadTracksFromFile(fileName, titleHashTable, artistHashTable);
+    // Add, search, and remove operations go here
 
-    // Perform desired operations, such as searching by title or artist, removing tracks, etc.
+    // Example: Search for a track by title
+    std::string titleToSearch = "Some Track Title";
+    Track* track = titleHashTable.searchTrack(titleToSearch, true);
+    if (track) {
+        std::cout << "Found track: " << track->getTitle() << " by " << track->getArtist() << std::endl;
+    } else {
+        std::cout << "Track not found" << std::endl;
+    }
 
-    // Print the contents of the hash tables
-    std::cout << "Title hash table:" << std::endl;
-    titleHashTable.printHashTable();
-    std::cout << "Artist hash table:" << std::endl;
-    artistHashTable.printHashTable();
+    // Example: Remove a track by artist
+    std::string artistToRemove = "Some Artist Name";
+    if (artistHashTable.removeTrack(artistToRemove, false)) {
+        std::cout << "Removed track by " << artistToRemove << std::endl;
+    } else {
+        std::cout << "No track found for artist " << artistToRemove << std::endl;
+    }
+
+    // Example: Add a new track
+    Track newTrack("New Track Title", "New Track Artist", 180);
+    titleHashTable.insertTrack(newTrack, true);
+    artistHashTable.insertTrack(newTrack, false);
+    std::cout << "Added new track: " << newTrack.getTitle() << " by " << newTrack.getArtist() << std::endl;
 
     return 0;
 }
