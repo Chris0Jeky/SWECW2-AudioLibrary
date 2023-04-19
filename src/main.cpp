@@ -1,10 +1,11 @@
 #include "file_loader.h"
 #include "hash_table.h"
 #include <iostream>
+#include <ostream>
 
 int main() {
     std::string fileName = "tracks.txt";
-    int tableSize = 1000; // Choose an appropriate size for the hash tables
+    int tableSize = 1000000; // Choose an appropriate size for the hash tables
 
     HashTable titleHashTable(tableSize);
     HashTable artistHashTable(tableSize);

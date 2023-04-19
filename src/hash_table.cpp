@@ -1,5 +1,7 @@
 #include "hash_table.h"
 #include <string>
+#include <iostream>
+#include <ostream>
 
 HashTable::HashTable(int size) : size(size) {
     buckets.resize(size);
