@@ -11,6 +11,7 @@ void loadTracksFromFile(const std::string& fileName, HashTable& titleHashTable, 
     }
 
     std::string line;
+    // Read tracks from the file and insert them into the hash tables
     while (std::getline(file, line)) {
         std::istringstream ss(line);
         std::string title, artist, durationStr;
@@ -24,6 +25,5 @@ void loadTracksFromFile(const std::string& fileName, HashTable& titleHashTable, 
         titleHashTable.insertTrack(track, true);
         artistHashTable.insertTrack(track, false);
     }
-
     file.close();
 }

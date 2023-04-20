@@ -1,3 +1,4 @@
+// HashTable class implementation
 #include "hash_table.h"
 #include <string>
 #include <iostream>

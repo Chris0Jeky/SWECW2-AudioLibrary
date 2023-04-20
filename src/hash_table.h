@@ -1,3 +1,4 @@
+// HashTable class definition
 #pragma once
 #include <vector>
 #include <list>
@@ -9,11 +10,13 @@ public:
     int size;
     std::vector<Track*> searchTrack(const std::string& key, bool useTitleAsKey);
 
+    // Constructors and destructor for HashTable class
     HashTable(int size);
 
     HashTable();
     ~HashTable();
 
+    // Methods to insert and remove tracks in the hash table
     void insertTrack(const Track& track, bool useTitleAsKey);
     bool removeTrack(const std::string& key, bool useTitleAsKey);
     void printHashTable() const;

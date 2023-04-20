@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cctype>
 
+// Save tracks from the title hash table to the specified file
 void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTable) {
     std::ofstream file(fileName);
     if (!file.is_open()) {
@@ -14,6 +15,7 @@ void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTab
         return;
     }
 
+    // Iterate through the title hash table and save each track to the file
     for (int i = 0; i < titleHashTable.size; ++i) {
         for (const Track& track : titleHashTable.getBuckets()[i]) {
             file << track.title << '\t' << track.artist << '\t' << track.duration << '\n';
@@ -23,6 +25,7 @@ void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTab
     file.close();
 }
 
+// Convert the input string to lowercase
 std::string toLowerCase(const std::string& input) {
     std::string result(input);
     std::transform(result.begin(), result.end(), result.begin(), ::tolower);
@@ -32,6 +35,7 @@ std::string toLowerCase(const std::string& input) {
 int main(int argc, char* argv[]) {
     std::string fileName;
 
+    // Determine file name or path based on command line arguments
     if (argc == 1) {
         std::cout << "You can insert the name of the file you wish to work with or you can specify"
                      " the path to that file and the name of the file." << std::endl;
@@ -51,18 +55,22 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // Initialize hash tables for track titles and artists
     HashTable titleHashTable;
     HashTable artistHashTable;
 
+    // Load tracks from the file into the hash tables
     loadTracksFromFile(fileName, titleHashTable, artistHashTable);
 
     std::string command;
 
+    // Main command loop
     while (true) {
         std::cout << "Enter command (search, import, export, remove, quit): ";
         std::getline(std::cin, command);
         command = toLowerCase(command);
 
+        // Process user commands
         if (command == "search") {
             std::string type, key;
             while (true) {
