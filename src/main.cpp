@@ -67,7 +67,6 @@ int main(int argc, char* argv[]) {
     std::string command;
 
     while (true) {
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         command = getInput("Enter command (search, import, export, remove, quit): ");
         command = toLowerCase(command);
 
@@ -80,11 +79,12 @@ int main(int argc, char* argv[]) {
             } while (type != "track" && type != "artist");
 
             std::cout << "Enter the title or artist name: ";
-            std::cin.ignore();
             std::getline(std::cin, key);
 
             bool searchByTitle = type == "track";
-            Track* track = titleHashTable.searchTrack(key, searchByTitle);
+            HashTable& searchHashTable = searchByTitle ? titleHashTable : artistHashTable;
+            Track* track = searchHashTable.searchTrack(key, searchByTitle);
+
 
             if (track) {
                 std::cout << "Found track: " << track->title << " by " << track->artist << std::endl;
@@ -95,12 +95,14 @@ int main(int argc, char* argv[]) {
             std::string file;
             std::cout << "Enter file name: ";
             std::cin >> file;
+            std::cin.ignore();
 
             loadTracksFromFile(file, titleHashTable, artistHashTable);
         } else if (command == "export") {
             std::string file;
             std::cout << "Enter file name: ";
             std::cin >> file;
+            std::cin.ignore();
 
             saveTracksToFile(file, titleHashTable);
         } else if (command == "remove") {
