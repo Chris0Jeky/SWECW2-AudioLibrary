@@ -14,6 +14,7 @@ HashTable setup_test_hash_table() {
 }
 
 
+// Test the hash function with different strings and expect different hash values
 TEST_CASE("Test hashFunction", "[HashTable]") {
     HashTable table;
 
@@ -21,6 +22,7 @@ TEST_CASE("Test hashFunction", "[HashTable]") {
     REQUIRE(table.testHashFunction("Artist1") != table.testHashFunction("Artist2"));
 }
 
+// Test inserting a track and then searching for it by title
 TEST_CASE("Inserting a track") {
     HashTable titleHashTable = setup_test_hash_table();
 
@@ -35,6 +37,7 @@ TEST_CASE("Inserting a track") {
 }
 
 
+// Test inserting and searching for tracks by title and artist
 TEST_CASE("Test insertTrack and searchTrack", "[HashTable]") {
     HashTable titleTable;
     HashTable artistTable;
@@ -48,6 +51,7 @@ TEST_CASE("Test insertTrack and searchTrack", "[HashTable]") {
     titleTable.insertTrack(track2, true);
     artistTable.insertTrack(track2, false);
 
+    // Test searching for a track by its title
     SECTION("Test search by title") {
         std::vector<Track*> foundTracks = titleTable.searchTrack("Title1", true);
         REQUIRE(foundTracks.size() == 1);
@@ -56,6 +60,7 @@ TEST_CASE("Test insertTrack and searchTrack", "[HashTable]") {
         REQUIRE(foundTracks[0]->duration == 180);
     }
 
+    // Test searching for a track by its artist
     SECTION("Test search by artist") {
         std::vector<Track*> foundTracks = artistTable.searchTrack("Artist2", false);
         REQUIRE(foundTracks.size() == 1);
@@ -65,6 +70,7 @@ TEST_CASE("Test insertTrack and searchTrack", "[HashTable]") {
     }
 }
 
+// Test searching for a track by title
 TEST_CASE("Searching for a track by title") {
     HashTable titleHashTable = setup_test_hash_table();
 
@@ -75,6 +81,7 @@ TEST_CASE("Searching for a track by title") {
     REQUIRE(tracks[0]->duration == 286);
 }
 
+// Test removing a track by title and then verifying it is not in the hash table
 TEST_CASE("Removing a track by title") {
     HashTable titleHashTable = setup_test_hash_table();
 
@@ -86,6 +93,7 @@ TEST_CASE("Removing a track by title") {
 }
 
 
+// Test inserting, searching, and removing tracks
 TEST_CASE("Inserting and searching tracks", "[hash_table]") {
     HashTable titleHashTable;
 
@@ -95,6 +103,7 @@ TEST_CASE("Inserting and searching tracks", "[hash_table]") {
     titleHashTable.insertTrack(track1, true);
     titleHashTable.insertTrack(track2, true);
 
+    // Test searching for existing tracks by their titles
     SECTION("Searching existing tracks") {
         std::vector<Track*> result1 = titleHashTable.searchTrack("Title 1", true);
         REQUIRE(result1.size() == 1);
@@ -109,12 +118,14 @@ TEST_CASE("Inserting and searching tracks", "[hash_table]") {
         REQUIRE(result2[0]->duration == 200);
     }
 
+    // Test searching for a non-existent track by title
     SECTION("Searching non-existent track") {
         std::vector<Track*> result3 = titleHashTable.searchTrack("Non-existent title", true);
         REQUIRE(result3.empty());
     }
 }
 
+// Test removing tracks by title and artist
 TEST_CASE("Test removeTrack", "[HashTable]") {
     HashTable titleTable;
     HashTable artistTable;
@@ -128,12 +139,14 @@ TEST_CASE("Test removeTrack", "[HashTable]") {
     titleTable.insertTrack(track2, true);
     artistTable.insertTrack(track2, false);
 
+    // Test removing a track by its title
     SECTION("Test remove by title") {
         REQUIRE(titleTable.removeTrack("Title1", true));
         std::vector<Track*> foundTracks = titleTable.searchTrack("Title1", true);
         REQUIRE(foundTracks.empty());
     }
 
+    // Test removing a track by its artist
     SECTION("Test remove by artist") {
         REQUIRE(artistTable.removeTrack("Artist2", false));
         std::vector<Track*> foundTracks = artistTable.searchTrack("Artist2", false);
