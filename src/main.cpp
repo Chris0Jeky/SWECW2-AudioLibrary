@@ -3,6 +3,23 @@
 #include "track.h"
 #include <iostream>
 #include <ostream>
+#include <fstream>
+
+void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTable) {
+    std::ofstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file: " << fileName << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < titleHashTable.size; ++i) {
+        for (const Track& track : titleHashTable.buckets[i]) {
+            file << track.title << '\t' << track.artist << '\t' << track.duration << '\n';
+        }
+    }
+
+    file.close();
+}
 
 int main(int argc, char* argv[]) {
     std::string fileName;
@@ -31,30 +48,57 @@ int main(int argc, char* argv[]) {
 
     loadTracksFromFile(fileName, titleHashTable, artistHashTable);
 
-    /*
-    // Example: Search for a track by title
-    std::string titleToSearch = "Some Track Title";
-    Track* track = titleHashTable.searchTrack(titleToSearch, true);
-    if (track) {
-        std::cout << "Found track: " << track->title << " by " << track->artist << std::endl;
-    } else {
-        std::cout << "Track not found" << std::endl;
-    }
+    std::string command;
 
-    // Example: Remove a track by artist
-    std::string artistToRemove = "Some Artist Name";
-    if (artistHashTable.removeTrack(artistToRemove, false)) {
-        std::cout << "Removed track by " << artistToRemove << std::endl;
-    } else {
-        std::cout << "No track found for artist " << artistToRemove << std::endl;
-    }
+    while (true) {
+        std::cout << "Enter command (search, import, export, remove, quit): ";
+        std::cin >> command;
 
-    // Example: Add a new track
-    Track newTrack("New Track Title", "New Track Artist", 180);
-    titleHashTable.insertTrack(newTrack, true);
-    artistHashTable.insertTrack(newTrack, false);
-    std::cout << "Added new track: " << newTrack.title << " by " << newTrack.artist << std::endl;
-     */
+        if (command == "search") {
+            std::string type, key;
+            std::cout << "Enter search type (track or artist): ";
+            std::cin >> type;
+            std::cout << "Enter the title or artist name: ";
+            std::cin.ignore();
+            std::getline(std::cin, key);
+
+            bool searchByTitle = type == "track";
+            Track* track = titleHashTable.searchTrack(key, searchByTitle);
+
+            if (track) {
+                std::cout << "Found track: " << track->title << " by " << track->artist << std::endl;
+            } else {
+                std::cout << "Track not found" << std::endl;
+            }
+        } else if (command == "import") {
+            std::string file;
+            std::cout << "Enter file name: ";
+            std::cin >> file;
+
+            loadTracksFromFile(file, titleHashTable, artistHashTable);
+        } else if (command == "export") {
+            std::string file;
+            std::cout << "Enter file name: ";
+            std::cin >> file;
+
+            saveTracksToFile(file, titleHashTable);
+        } else if (command == "remove") {
+            std::string title;
+            std::cout << "Enter the title of the track to remove: ";
+            std::cin.ignore();
+            std::getline(std::cin, title);
+
+            if (titleHashTable.removeTrack(title, true)) {
+                std::cout << "Track removed" << std::endl;
+            } else {
+                std::cout << "Track not found" << std::endl;
+            }
+        } else if (command == "quit") {
+            break;
+        } else {
+            std::cout << "Invalid command" << std::endl;
+        }
+    }
 
     return 0;
 }
