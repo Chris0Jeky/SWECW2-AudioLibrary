@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
 
     loadTracksFromFile(fileName, titleHashTable, artistHashTable);
 
+    /*
     // Example: Search for a track by title
     std::string titleToSearch = "Some Track Title";
     Track* track = titleHashTable.searchTrack(titleToSearch, true);
@@ -53,6 +54,7 @@ int main(int argc, char* argv[]) {
     titleHashTable.insertTrack(newTrack, true);
     artistHashTable.insertTrack(newTrack, false);
     std::cout << "Added new track: " << newTrack.title << " by " << newTrack.artist << std::endl;
+     */
 
     return 0;
 }
