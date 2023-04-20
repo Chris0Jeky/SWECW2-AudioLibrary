@@ -7,7 +7,7 @@ SRC = main.cpp track.cpp hash_table.cpp file_loader.cpp
 OBJ = $(SRC:.cpp=.o)
 
 # Define the test source files and object files
-TEST_SRC = tests.cpp track.cpp hash_table.cpp
+TEST_SRC = tests.cpp track.cpp hash_table.cpp file_loader.cpp
 TEST_OBJ = $(TEST_SRC:.cpp=.o)
 
 # Define the executable output
