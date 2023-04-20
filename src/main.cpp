@@ -4,6 +4,8 @@
 #include <iostream>
 #include <ostream>
 #include <fstream>
+#include <algorithm>
+#include <cctype>
 
 void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTable) {
     std::ofstream file(fileName);
@@ -19,6 +21,20 @@ void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTab
     }
 
     file.close();
+}
+
+std::string getInput(const std::string& prompt) {
+    std::string input;
+    std::cout << prompt;
+    std::cin.ignore();
+    std::getline(std::cin, input);
+    return input;
+}
+
+std::string toLowerCase(const std::string& input) {
+    std::string result(input);
+    std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+    return result;
 }
 
 int main(int argc, char* argv[]) {
@@ -51,8 +67,8 @@ int main(int argc, char* argv[]) {
     std::string command;
 
     while (true) {
-        std::cout << "Enter command (search, import, export, remove, quit): ";
-        std::cin >> command;
+        command = getInput("Enter command (search, import, export, remove, quit): ");
+        command = toLowerCase(command);
 
         if (command == "search") {
             std::string type, key;
@@ -96,9 +112,12 @@ int main(int argc, char* argv[]) {
         } else if (command == "quit") {
             break;
         } else {
-            std::cout << "Invalid command" << std::endl;
+            std::cout << "Invalid command. Enter 'exit' to return to the main menu or try again." << std::endl;
+            std::string exitOrRetry = getInput("");
+            if (toLowerCase(exitOrRetry) == "exit") {
+                continue;
+            }
         }
     }
-
     return 0;
 }
