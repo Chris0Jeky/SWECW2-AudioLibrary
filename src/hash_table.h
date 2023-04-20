@@ -6,6 +6,10 @@
 #include <string>
 
 class HashTable {
+
+public:
+    unsigned int testHashFunction(const std::string& key) const;
+
 public:
     int size;
     std::vector<Track*> searchTrack(const std::string& key, bool useTitleAsKey);

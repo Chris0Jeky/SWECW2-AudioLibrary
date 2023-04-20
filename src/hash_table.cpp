@@ -14,6 +14,11 @@ HashTable::HashTable(int size) : size(size) {
     buckets.resize(size);
 }
 
+unsigned int HashTable::testHashFunction(const std::string& key) const {
+    return hashFunction(key);
+}
+
+
 const std::vector<std::list<Track>>& HashTable::getBuckets() const {
     return buckets;
 }
