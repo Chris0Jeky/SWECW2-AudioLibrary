@@ -6,7 +6,6 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
-#include <limits>
 
 void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTable) {
     std::ofstream file(fileName);
@@ -16,7 +15,7 @@ void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTab
     }
 
     for (int i = 0; i < titleHashTable.size; ++i) {
-        for (const Track& track : titleHashTable.buckets[i]) {
+        for (const Track& track : titleHashTable.getBuckets()[i]) {
             file << track.title << '\t' << track.artist << '\t' << track.duration << '\n';
         }
     }
@@ -85,11 +84,12 @@ int main(int argc, char* argv[]) {
 
             bool searchByTitle = type == "track";
             HashTable& searchHashTable = searchByTitle ? titleHashTable : artistHashTable;
-            Track* track = searchHashTable.searchTrack(key, searchByTitle);
+            std::vector<Track*> matchingTracks = searchHashTable.searchTrack(key, searchByTitle);
 
-
-            if (track) {
-                std::cout << "Found track: " << track->title << " by " << track->artist << std::endl;
+            if (!matchingTracks.empty()) {
+                for (Track* track : matchingTracks) {
+                    std::cout << "Found track: " << track->title << " by " << track->artist << std::endl;
+                }
             } else {
                 std::cout << "Track not found" << std::endl;
             }

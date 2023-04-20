@@ -13,6 +13,11 @@ HashTable::HashTable(int size) : size(size) {
     buckets.resize(size);
 }
 
+const std::vector<std::list<Track>>& HashTable::getBuckets() const {
+    return buckets;
+}
+
+
 void HashTable::insertTrack(const Track& track, bool useTitleAsKey) {
     std::string key = useTitleAsKey ? track.title : track.artist;
     unsigned int index = hashFunction(key);
@@ -68,3 +73,17 @@ unsigned int HashTable::hashFunction(const std::string& key) const {
     }
     return hash % size;
 }
+
+std::vector<Track*> HashTable::searchTrack(const std::string& key, bool useTitleAsKey) {
+    unsigned int index = hashFunction(key);
+    std::vector<Track*> matchingTracks;
+
+    for (Track& track : buckets[index]) {
+        if ((useTitleAsKey && track.title == key) || (!useTitleAsKey && track.artist == key)) {
+            matchingTracks.push_back(&track);
+        }
+    }
+
+    return matchingTracks;
+}
+

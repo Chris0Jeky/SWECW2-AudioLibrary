@@ -7,7 +7,7 @@
 class HashTable {
 public:
     int size;
-    std::vector<std::list<Track>> buckets;
+    std::vector<Track*> searchTrack(const std::string& key, bool useTitleAsKey);
 
     HashTable(int size);
 
@@ -15,9 +15,10 @@ public:
     ~HashTable();
 
     void insertTrack(const Track& track, bool useTitleAsKey);
-    Track* searchTrack(const std::string& key, bool useTitleAsKey);
     bool removeTrack(const std::string& key, bool useTitleAsKey);
     void printHashTable() const;
+    const std::vector<std::list<Track>>& getBuckets() const;
+
 
 private:
     unsigned int hashFunction(const std::string& key) const;
