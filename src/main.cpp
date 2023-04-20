@@ -24,13 +24,6 @@ void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTab
     file.close();
 }
 
-std::string getInput(const std::string& prompt) {
-    std::string input;
-    std::cout << prompt;
-    std::getline(std::cin, input);
-    return input;
-}
-
 std::string toLowerCase(const std::string& input) {
     std::string result(input);
     std::transform(result.begin(), result.end(), result.begin(), ::tolower);
@@ -67,19 +60,28 @@ int main(int argc, char* argv[]) {
     std::string command;
 
     while (true) {
-        command = getInput("Enter command (search, import, export, remove, quit): ");
+        std::cout << "Enter command (search, import, export, remove, quit): ";
+        std::getline(std::cin, command);
         command = toLowerCase(command);
 
         if (command == "search") {
             std::string type, key;
-            do {
+            while (true) {
                 std::cout << "Enter search type (track or artist): ";
                 std::cin >> type;
                 type = toLowerCase(type);
-            } while (type != "track" && type != "artist");
+
+                if (type == "track" || type == "artist") {
+                    break;
+                } else {
+                    std::cout << "Invalid search type. Please enter 'track' or 'artist'." << std::endl;
+                }
+            }
 
             std::cout << "Enter the title or artist name: ";
+            std::cin.ignore();
             std::getline(std::cin, key);
+
 
             bool searchByTitle = type == "track";
             HashTable& searchHashTable = searchByTitle ? titleHashTable : artistHashTable;
@@ -119,8 +121,9 @@ int main(int argc, char* argv[]) {
         } else if (command == "quit") {
             break;
         } else {
-            std::cout << "Invalid command. Enter 'exit' to return to the main menu or try again." << std::endl;
-            std::string exitOrRetry = getInput("");
+            std::cout << "Invalid command. Press 'enter' to continue." << std::endl;
+            std::string exitOrRetry;
+            std::getline(std::cin, exitOrRetry);
             if (toLowerCase(exitOrRetry) == "exit") {
                 continue;
             }
