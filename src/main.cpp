@@ -6,6 +6,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
+#include <limits>
 
 void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTable) {
     std::ofstream file(fileName);
@@ -72,8 +73,12 @@ int main(int argc, char* argv[]) {
 
         if (command == "search") {
             std::string type, key;
-            std::cout << "Enter search type (track or artist): ";
-            std::cin >> type;
+            do {
+                std::cout << "Enter search type (track or artist): ";
+                std::cin >> type;
+                type = toLowerCase(type);
+            } while (type != "track" && type != "artist");
+
             std::cout << "Enter the title or artist name: ";
             std::cin.ignore();
             std::getline(std::cin, key);
