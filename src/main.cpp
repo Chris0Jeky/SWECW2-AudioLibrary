@@ -26,7 +26,6 @@ void saveTracksToFile(const std::string& fileName, const HashTable& titleHashTab
 std::string getInput(const std::string& prompt) {
     std::string input;
     std::cout << prompt;
-    std::cin.ignore();
     std::getline(std::cin, input);
     return input;
 }
@@ -67,6 +66,7 @@ int main(int argc, char* argv[]) {
     std::string command;
 
     while (true) {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         command = getInput("Enter command (search, import, export, remove, quit): ");
         command = toLowerCase(command);
 
