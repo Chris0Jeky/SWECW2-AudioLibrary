@@ -31,18 +31,6 @@ void HashTable::insertTrack(const Track& track, bool useTitleAsKey) {
     buckets[index].push_back(track);
 }
 
-Track* HashTable::searchTrack(const std::string& key, bool useTitleAsKey) {
-    unsigned int index = hashFunction(key);
-
-    for (Track& track : buckets[index]) {
-        if ((useTitleAsKey && track.title == key) || (!useTitleAsKey && track.artist == key)) {
-            return &track;
-        }
-    }
-
-    return nullptr;
-}
-
 bool HashTable::removeTrack(const std::string& key, bool useTitleAsKey) {
     unsigned int index = hashFunction(key);
 

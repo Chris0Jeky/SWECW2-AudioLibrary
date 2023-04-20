@@ -21,6 +21,7 @@ public:
 
 
 private:
+    std::vector<std::list<Track>> buckets;
     unsigned int hashFunction(const std::string& key) const;
-    static const unsigned int TABLE_SIZE = 1000;
+    static const unsigned int TABLE_SIZE = 100000;
 };
