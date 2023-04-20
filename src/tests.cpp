@@ -1,6 +1,52 @@
 #define CATCH_CONFIG_MAIN
 #include "../include/catch.hpp"
 #include "hash_table.h"
+#include "track.h"
+#include "file_loader.h"
+#include "hash_table.h"
+
+HashTable setup_test_hash_table() {
+    HashTable titleHashTable;
+    HashTable artistHashTable;
+
+    loadTracksFromFile("tracks.txt", titleHashTable, artistHashTable);
+
+    return titleHashTable;
+}
+
+TEST_CASE("Inserting a track") {
+    HashTable titleHashTable = setup_test_hash_table();
+
+    Track newTrack("Test Track", "Test Artist", 180);
+    titleHashTable.insertTrack(newTrack, true);
+
+    Track* track = titleHashTable.searchTrack("Test Track", true);
+    REQUIRE(track != nullptr);
+    REQUIRE(track->title == "Test Track");
+    REQUIRE(track->artist == "Test Artist");
+    REQUIRE(track->duration == 180);
+}
+
+TEST_CASE("Searching for a track by title") {
+    HashTable titleHashTable = setup_test_hash_table();
+
+    Track* track = titleHashTable.searchTrack("Jump For Joy", true);
+    REQUIRE(track != nullptr);
+    REQUIRE(track->title == "Jump For Joy");
+    REQUIRE(track->artist == "New York Trio");
+    REQUIRE(track->duration == 286);
+}
+
+TEST_CASE("Removing a track by title") {
+    HashTable titleHashTable = setup_test_hash_table();
+
+    bool removed = titleHashTable.removeTrack("Jump For Joy", true);
+    REQUIRE(removed == true);
+
+    Track* track = titleHashTable.searchTrack("Jump For Joy", true);
+    REQUIRE(track == nullptr);
+}
+
 
 TEST_CASE("Inserting and searching tracks", "[hash_table]") {
     HashTable titleHashTable;
@@ -30,3 +76,5 @@ TEST_CASE("Inserting and searching tracks", "[hash_table]") {
         REQUIRE(result3 == nullptr);
     }
 }
+
+
