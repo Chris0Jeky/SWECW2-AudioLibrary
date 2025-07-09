@@ -100,10 +100,8 @@ std::vector<SearchEngine::SearchResult> SearchEngine::search(
     // Convert to result vector and sort by score
     std::vector<SearchResult> results;
     for (const auto& [track_id, score] : track_scores) {
-        if (score >= options.min_relevance) {
-            // Note: In real implementation, we'd need access to tracks to create SearchResult
-            // For now, we'll use a placeholder
-            results.emplace_back(nullptr, score);
+        if (score >= options.min_relevance && tracks_ && track_id < tracks_->size()) {
+            results.emplace_back((*tracks_)[track_id], score);
         }
     }
     
