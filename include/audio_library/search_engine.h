@@ -81,6 +81,20 @@ private:
     void add_to_trie(const std::string& word);
     void add_to_inverted_index(const std::string& term, size_t track_id, 
                               const std::string& field, double weight);
+    
+    // Search mode implementations
+    void search_exact(const std::string& query, const SearchOptions& options,
+                     std::unordered_map<size_t, double>& track_scores) const;
+    void search_prefix(const std::string& query, const SearchOptions& options,
+                      std::unordered_map<size_t, double>& track_scores) const;
+    void search_substring(const std::string& query, const SearchOptions& options,
+                         std::unordered_map<size_t, double>& track_scores) const;
+    void search_fuzzy(const std::string& query, const SearchOptions& options,
+                     std::unordered_map<size_t, double>& track_scores) const;
+    void search_regex(const std::string& pattern, const SearchOptions& options,
+                     std::unordered_map<size_t, double>& track_scores) const;
+    
+    bool should_search_field(const std::string& field, const SearchOptions& options) const;
 };
 
 } // namespace audio_library
