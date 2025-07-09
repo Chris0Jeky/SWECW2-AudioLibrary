@@ -45,7 +45,7 @@ public:
     
     // Search operations
     [[nodiscard]] std::vector<SearchResult> search(const std::string& query, 
-                                                   const SearchOptions& options = {}) const;
+                                                   const SearchOptions& options = SearchOptions{}) const;
     
     // Autocomplete/Suggestions
     [[nodiscard]] std::vector<std::string> get_suggestions(const std::string& prefix, 
