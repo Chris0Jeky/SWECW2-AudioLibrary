@@ -46,6 +46,7 @@ CLAUDE.md
 *.tmp
 *.temp
 demo_input.txt
+*.stackdump
 
 # OS specific
 .DS_Store
