@@ -242,7 +242,7 @@ std::optional<Track> Track::from_csv_line(const std::string& line) {
 
 std::optional<Track> Track::from_json(const std::string& json) {
     // Simple JSON parser for track objects
-    static const std::regex field_regex(R"("(\w+)"\s*:\s*("([^"\\]|\\.)*"|\d+(\.\d+)?))");
+    static const std::regex field_regex("\"(\\w+)\"\\s*:\\s*(\"([^\"\\\\]|\\\\.)*\"|\\d+(\\.\\d+)?)");
     
     std::unordered_map<std::string, std::string> fields;
     
