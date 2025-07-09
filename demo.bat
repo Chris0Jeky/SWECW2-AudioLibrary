@@ -1,41 +1,63 @@
 @echo off
-echo Audio Library Demo Script for Windows
-echo =====================================
+title Audio Library Demo
+color 0A
+echo ========================================
+echo    Audio Library Management System
+echo           Version 2.0 Demo
+echo ========================================
 echo.
 
-echo Building the project...
-make clean >nul 2>&1
-make -j4
-
-if %ERRORLEVEL% NEQ 0 (
-    echo Build failed. Please check the errors.
-    exit /b 1
+echo Checking for required files...
+if not exist music_manager.exe (
+    echo Building the project...
+    make clean >nul 2>&1
+    make -j4
+    
+    if %ERRORLEVEL% NEQ 0 (
+        echo Build failed. Please check the errors.
+        pause
+        exit /b 1
+    )
+    echo Build successful!
+) else (
+    echo Executable found, skipping build.
 )
 
-echo Build successful!
 echo.
+echo === Running Unit Tests ===
+echo Testing Track class...
+audio_library_tests.exe "[track]" -r compact
 
-echo Running basic tests...
-audio_library_tests.exe "[track]"
-
 echo.
-echo Starting the Music Library application...
+echo === Interactive Demo ===
 echo.
-echo Loading sample data from data/sample_tracks.csv
+echo This demo will show:
+echo 1. Loading 36 tracks from CSV
+echo 2. Searching for Queen tracks
+echo 3. Listing all tracks
+echo 4. Exiting the application
 echo.
+echo Press any key to start...
+pause >nul
 
 REM Create a demo input file for automated testing
 (
 echo 1
 echo Queen
+echo
 echo 2
-echo 1
+echo 0
+echo
 echo 0
 ) > demo_input.txt
 
-music_manager.exe data/sample_tracks.csv < demo_input.txt
+echo.
+echo Starting application with sample data...
+echo.
+music_manager.exe data\sample_tracks.csv < demo_input.txt
 
 echo.
+echo ========================================
 echo Demo completed successfully!
 echo.
 echo Features demonstrated:
@@ -46,6 +68,10 @@ echo - CSV/JSON import/export
 echo - Comprehensive metadata support
 echo - Statistics and analytics
 echo - Unit testing with Catch2
+echo.
+echo To run interactively:
+echo   music_manager.exe data\sample_tracks.csv
+echo ========================================
 
 REM Clean up
 del demo_input.txt 2>nul
