@@ -22,7 +22,6 @@ std::vector<Track> FileIO::import_csv(const std::filesystem::path& path,
     std::string line;
     size_t line_number = 0;
     size_t error_count = 0;
-    bool has_header = false;
     
     // Check if first line is a header
     if (std::getline(file, line)) {
@@ -38,7 +37,6 @@ std::vector<Track> FileIO::import_csv(const std::filesystem::path& path,
                 line_number = 0;
             } catch (...) {
                 // It's a header, skip it
-                has_header = true;
             }
         }
     }
