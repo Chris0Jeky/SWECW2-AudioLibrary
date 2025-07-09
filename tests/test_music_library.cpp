@@ -1,6 +1,7 @@
 #include "../include/catch.hpp"
 #include "audio_library/music_library.h"
 #include <thread>
+#include <atomic>
 
 using namespace audio_library;
 

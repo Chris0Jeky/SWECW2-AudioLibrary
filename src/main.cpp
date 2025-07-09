@@ -1,5 +1,6 @@
 #include "audio_library/music_library.h"
 #include "audio_library/file_io.h"
+#include "audio_library/search_engine.h"
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
