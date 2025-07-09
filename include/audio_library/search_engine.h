@@ -73,6 +73,9 @@ private:
     };
     std::unique_ptr<TrieNode> trie_root_;
     
+    // Reference to tracks for search results
+    const std::vector<TrackPtr>* tracks_ = nullptr;
+    
     // Helper methods
     std::vector<std::string> tokenize(const std::string& text) const;
     std::string normalize(const std::string& text, bool case_sensitive) const;
