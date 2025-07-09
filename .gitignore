@@ -11,6 +11,8 @@
 /obj
 /bin
 /lib
+legacy/*.o
+legacy/*.exe
 
 # Object files
 *.o
@@ -56,3 +58,4 @@ Thumbs.db
 test_results/
 *.log
 /.claude
+img.png
