@@ -1,3 +1,4 @@
 /.idea
 cmake-build-debug/CMakeFiles/clion-Debug-log.txt
 CLAUDE.md
+.claude/settings.local.json
