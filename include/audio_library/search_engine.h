@@ -41,6 +41,7 @@ public:
     void remove_track(size_t id);
     void clear_index();
     void rebuild_index(const std::vector<TrackPtr>& tracks);
+    void set_tracks(const std::vector<TrackPtr>* tracks) { tracks_ = tracks; }
     
     // Search operations
     [[nodiscard]] std::vector<SearchResult> search(const std::string& query, 
