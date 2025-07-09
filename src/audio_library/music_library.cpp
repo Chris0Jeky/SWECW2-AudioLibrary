@@ -9,6 +9,7 @@ namespace audio_library {
 
 MusicLibrary::MusicLibrary() 
     : search_engine_(std::make_unique<SearchEngine>()) {
+    search_engine_->set_tracks(&tracks_);
 }
 
 MusicLibrary::~MusicLibrary() = default;
