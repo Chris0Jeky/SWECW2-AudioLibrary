@@ -1,6 +1,57 @@
+# IDE files
 /.idea
-cmake-build-debug/CMakeFiles/clion-Debug-log.txt
-CLAUDE.md
-.claude/settings.local.json
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build directories
+/build
+/cmake-build-*/
 /obj
+/bin
+/lib
+
+# Object files
+*.o
+*.obj
+
+# Executables
 *.exe
+*.out
+*.app
+music_manager
+audio_library_tests
+
+# Libraries
+*.lib
+*.a
+*.dll
+*.so
+*.dylib
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Local settings
+CLAUDE.md
+.claude/
+
+# Temporary files
+*.tmp
+*.temp
+demo_input.txt
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Test results
+test_results/
+*.log
+/.claude
