@@ -32,23 +32,23 @@ public:
     
     // CSV operations
     static std::vector<Track> import_csv(const std::filesystem::path& path, 
-                                        const ImportOptions& options = {});
+                                        const ImportOptions& options = ImportOptions{});
     static bool export_csv(const std::filesystem::path& path, 
                           const std::vector<Track>& tracks,
-                          const ExportOptions& options = {});
+                          const ExportOptions& options = ExportOptions{});
     static bool export_csv(const std::filesystem::path& path, 
                           const std::vector<TrackPtr>& tracks,
-                          const ExportOptions& options = {});
+                          const ExportOptions& options = ExportOptions{});
     
     // JSON operations
     static std::vector<Track> import_json(const std::filesystem::path& path,
-                                         const ImportOptions& options = {});
+                                         const ImportOptions& options = ImportOptions{});
     static bool export_json(const std::filesystem::path& path,
                            const std::vector<Track>& tracks,
-                           const ExportOptions& options = {});
+                           const ExportOptions& options = ExportOptions{});
     static bool export_json(const std::filesystem::path& path,
                            const std::vector<TrackPtr>& tracks,
-                           const ExportOptions& options = {});
+                           const ExportOptions& options = ExportOptions{});
     
     // Playlist operations (M3U format)
     static std::vector<std::string> import_playlist(const std::filesystem::path& path);
